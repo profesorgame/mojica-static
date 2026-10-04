@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  /* before first paint: restore the visitor's choice; dark is the default (David). Shared with the CV via the same key */
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem("theme"); } catch (e) {}
+    if (t !== "light" && t !== "dark") t = "dark";
+    var d = document.documentElement;
+    d.dataset.theme = t;
+    d.classList.add("js", "fl");
+    /* hold the identity plane (visibility only, no layout cost) for the few ms the
+       embedded font takes to decode, so nothing ever lays out in a fallback face */
+    function ready() { requestAnimationFrame(function () { requestAnimationFrame(function () { d.classList.remove("fl"); }); }); }
+    setTimeout(ready, 1500);
+    if (document.fonts && document.fonts.load) document.fonts.load('700 1em "Roboto Mono"').then(ready, ready);
+    /* arriving through a cross-document view transition: the new page's snapshot must include the plane */
+    addEventListener("pagereveal", function (e) { if (e.viewTransition) d.classList.remove("fl"); });
+  })();
+</script>
+<title>404 — David Mojica</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#111827">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3CclipPath id='c'%3E%3Ccircle cx='16' cy='16' r='12'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23c)' fill='none' stroke='%23f16476' stroke-width='3.2'%3E%3Cpath d='M2 9q3.5-3 7 0t7 0 7 0 7 0M2 16q3.5-3 7 0t7 0 7 0 7 0M2 23q3.5-3 7 0t7 0 7 0 7 0'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+/* fonts:start */@font-face{font-family:"Roboto Mono";font-style:normal;font-weight:400 700;font-display:block;src:url(data:font/woff2;base64,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) format("woff2")}/* Roboto Mono (c) The Roboto Mono Project Authors, SIL Open Font License 1.1 *//* fonts:end */
+
+/* metric-matched fallback: every face here advances 0.6em, like Roboto Mono, so the
+   few ms before the embedded font is decoded never re-flow anything */
+@font-face { font-family: "RM Fallback"; src: local("Menlo"), local("Liberation Mono"), local("Courier New"), local("Cousine"), local("DejaVu Sans Mono"); }
+
+/* ---------------------------------------------------------------- tokens
+   Brand authority: the pre-AI originals (docs/brand-originals/).
+   Dark = the 2015 landing's gray-900; light = the 2022 CV's blue.
+   The identity plane is always the other world. */
+:root {
+  color-scheme: dark;
+  --ground: #111827;
+  --plane: #cae7ff;
+  --plane-ink: #050a30;
+  --plane-ink-2: #364164;
+  --btn-bg: #050a30;
+  --btn-ink: #cae7ff;
+  --control: #cae7ff;
+  --coral: #f16476;
+  --orchid: #eb83f8;
+  --mint: #83f09a;
+  --ring: #cae7ff;
+  --pad: clamp(.75rem, min(4vw, 5.5vh), 3.5rem); /* scales with height too: the poster fits one screen */
+}
+html[data-theme="light"] {
+  color-scheme: light;
+  --ground: #cae7ff;
+  --plane: #050a30;
+  --plane-ink: #ffffff;
+  --plane-ink-2: #cae7ff;
+  --btn-bg: #cae7ff;
+  --btn-ink: #050a30;
+  --control: #050a30;
+  --coral: #d6405a;
+  --orchid: #9b3fc0;
+  --mint: #050a30;
+  --ring: #050a30;
+}
+
+/* ---------------------------------------------------------------- base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.defs { position: absolute; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* very large screens: the whole rem scale grows with the viewport, so the plane keeps its share of the poster */
+@media (min-width: 1800px) and (min-height: 900px) { html { font-size: clamp(100%, min(1.111vw, 1.778vh), 150%); } }
+body {
+  font-family: "Roboto Mono", "RM Fallback", monospace;
+  font-synthesis: none;
+  line-height: 1.5;
+  font-weight: 400;
+  background: var(--ground);
+  color: var(--plane-ink);
+  overflow-x: clip;
+  caret-color: var(--plane-ink);
+  accent-color: var(--plane-ink);
+}
+::selection { background: var(--plane-ink); color: var(--plane); }
+:focus-visible { outline: 2px solid var(--control); outline-offset: 3px; }
+.plane :focus-visible { outline-color: var(--plane-ink); }
+
+/* ---------------------------------------------------------------- poster */
+.poster {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: clamp(.5rem, 6vh, 7rem) 0;
+  isolation: isolate;
+  overflow-x: clip;
+}
+
+/* the field: David's original figures, still, bleeding off every edge */
+.field { position: absolute; inset: 0; overflow: hidden; z-index: -1; }
+.fig { position: absolute; display: block; overflow: visible; }
+/* the 2015 landing's move-up / move-down, toned down: each figure on its own cycle */
+.field .fig {
+  animation: bob var(--t, 7s) ease-in-out var(--d, 0s) infinite alternate;
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+@keyframes bob { from { translate: 0 calc(var(--a, 10px) * -1); } to { translate: 0 var(--a, 10px); } }
+.f-disc   { --a: 12px; --t: 7s;   --d: -1s; }
+.f-ring   { --a: 10px; --t: 9s;   --d: -4s; }
+.f-plus1  { --a: 14px; --t: 5s;   --d: -2s; }
+.f-plus2  { --a: 9px;  --t: 6.5s; --d: -5s; }
+.f-plus3  { --a: 12px; --t: 5.5s; --d: -3s; }
+.f-tri    { --a: 11px; --t: 8s;   --d: -6s; }
+.f-disc2  { --a: 13px; --t: 6s;   --d: -2.5s; }
+.f-ring2  { --a: 8px;  --t: 8.5s; --d: -1.5s; }
+.f-stairs { --a: 10px; --t: 7.5s; --d: -3.5s; }
+.coral { color: var(--coral); }
+.orchid { color: var(--orchid); }
+.mint { color: var(--mint); }
+.ring { color: var(--ring); }
+
+.f-disc   { width: min(36vw, 58vh); left: -9vw;  top: -16vh; }
+.f-ring   { width: min(22vw, 36vh); right: 9vw;   top: 6vh; }
+.f-plus1  { width: min(6vw, 10vh);  left: 56vw;  top: 15vh; }
+.f-plus2  { width: min(10vw, 16vh); right: -3vw;  top: 50vh; }
+.f-plus3  { width: min(4vw, 6vh);   left: 52vw;  bottom: 5vh; }
+.f-tri    { width: min(22vw, 36vh); left: -5vw;  bottom: -12vh; }
+.f-disc2  { width: min(20vw, 32vh); right: 13vw; bottom: -11vh; }
+.f-ring2  { width: min(13vw, 21vh); right: -4vw; bottom: 6vh; }
+.f-stairs { width: min(18vw, 30vh); left: 57vw;  top: 44vh; }
+
+@media (min-width: 1600px) {
+  .f-ring { width: 22vw; } .f-stairs { width: 18vw; left: 53vw; } .f-plus1 { width: 6vw; left: 47vw; } .f-plus3 { left: 44vw; }
+}
+
+/* the identity plane: one flat colour field inside the poster */
+.fl .plane-wrap { visibility: hidden; }
+.plane-wrap {
+  position: relative;
+  z-index: 1;
+  margin-left: clamp(1rem, 9vw, 14rem);
+  width: fit-content;
+  max-width: calc(100vw - 2rem);
+}
+.plane {
+  position: relative;
+  background: var(--plane);
+  padding: var(--pad) calc(var(--pad) * 1.75) var(--pad) var(--pad);
+}
+/* figures locked to the plane's edges; they live in its padding, never on text */
+.edge { position: absolute; pointer-events: none; }
+.e-stairs { width: calc(var(--pad) * 2.6); right: calc(var(--pad) * -1.3); top: 30%; z-index: 2; }
+.e-plus   { width: calc(var(--pad) * 1.5); left: calc(var(--pad) * -1.05); bottom: calc(var(--pad) * -.3); z-index: 2; } /* bites the left edge, two-thirds on the ground */
+/* edge figures move only along the edge they bite, never toward the text */
+.edge { transition: transform .6s cubic-bezier(.16, 1, .3, 1); }
+.e-tri    { --axis: x; animation: slide-x 9s ease-in-out -2s infinite alternate; }
+.e-stairs { --axis: y; animation: slide-y 8s ease-in-out -5s infinite alternate; }
+.e-plus   { --axis: r; animation: wobble 11s ease-in-out -3s infinite alternate; }
+@keyframes slide-x { from { translate: -10px 0; } to { translate: 10px 0; } }
+@keyframes slide-y { from { translate: 0 -8px; } to { translate: 0 8px; } }
+@keyframes wobble { from { rotate: -8deg; } to { rotate: 8deg; } }
+.e-tri    { width: calc(var(--pad) * 3.4); right: 18%; top: calc(var(--pad) * -2.2); z-index: -1; }
+
+/* ---------------------------------------------------------------- type */
+h1 { font-weight: 700; }
+.hello {
+  display: block;
+  font-weight: 400;
+  font-size: clamp(.8125rem, min(1.25vw, 2.2vh), 1.25rem);
+  line-height: 1.4;
+  height: 1.4em; /* fixed line box: the typing never moves the name */
+  margin-bottom: clamp(.15em, 1vh, .6em);
+}
+.type {
+  display: inline-block;
+  vertical-align: top;
+  height: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  width: calc(10ch + .15em); /* 10 chars plus subpixel slack */
+  border-right: .09em solid transparent;
+  animation: type .6s steps(10, end) .2s both, caret 1s steps(1, end) .2s 7; /* slow blink, lingers ~7s */
+}
+@keyframes type { from { width: 0; } to { width: calc(10ch + .15em); } }
+@keyframes caret { 0% { border-right-color: currentColor; } 50% { border-right-color: transparent; } }
+.name {
+  display: block;
+  font-size: clamp(1.75rem, min(6.5vw, 10vh), 6rem);
+  line-height: .95;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+}
+.name > span { display: block; }
+.headline {
+  margin-top: clamp(.4rem, min(2vw, 2.6vh), 1.6rem);
+  font-weight: 500;
+  font-size: clamp(.875rem, min(1.5vw, 2.45vh), 1.375rem);
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
+.headline > span:not(.sr) { display: block; white-space: nowrap; } /* one discipline per line, never split */
+.facts {
+  list-style: none;
+  margin-top: clamp(.4rem, min(1.6vw, 2vh), 1.25rem);
+  color: var(--plane-ink-2);
+  font-size: clamp(.8125rem, min(1.1vw, 2vh), 1.125rem);
+  line-height: clamp(1.35, .9 + 1vh, 1.6);
+}
+.actions {
+  margin-top: clamp(.5rem, min(2.4vw, 3vh), 1.875rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem 1.5rem;
+}
+.email {
+  display: inline-block;
+  white-space: nowrap;
+  padding: .75em 1.25em;
+  border: 2px solid var(--btn-bg);
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+  font-weight: 500;
+  font-size: clamp(.8125rem, 2.2vh, 1rem);
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background-color .12s, color .12s;
+}
+.email:hover { background: transparent; color: var(--plane-ink); }
+.linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
+  min-height: 2.25rem;
+  color: var(--plane-ink);
+  font-size: clamp(.8125rem, 2.2vh, 1rem);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .22em;
+  transition: text-decoration-thickness .12s;
+}
+.linkedin:hover { text-decoration-thickness: 3px; }
+.linkedin svg { width: .8em; height: .8em; }
+
+/* ---------------------------------------------------------------- theme control */
+.theme {
+  display: none;
+  position: absolute;
+  z-index: 3;
+  top: 16px;
+  right: 16px;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: .45rem;
+  color: var(--control);
+  background: var(--ground);
+  border: 2px solid var(--control);
+  cursor: pointer;
+}
+.theme svg { display: block; width: 100%; height: 100%; transition: rotate .3s cubic-bezier(.16, 1, .3, 1); }
+.theme:hover svg { rotate: 180deg; }
+.js .theme { display: block; }
+/* break-apart control: the theme control's twin, one slot to its left */
+.shatter {
+  display: none; position: absolute; z-index: 3; top: 16px; right: calc(16px + 2.5rem + 8px);
+  width: 2.5rem; height: 2.5rem; padding: .45rem;
+  color: var(--control); background: var(--ground); border: 2px solid var(--control); cursor: pointer;
+}
+.shatter svg { display: block; width: 100%; height: 100%; }
+.shatter:hover, html[data-broken] .shatter { background: var(--control); color: var(--ground); }
+.js .shatter { display: block; }
+/* broken figures: strips in a fixed layer behind the plane; ambient motion paused */
+.shards { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.shards.front { z-index: 2; } /* inside .plane-wrap: the pieces of the figures that sit in front of the plane stay in front */
+.shards .shard-fig { position: fixed; transform-origin: 50% 50%; }
+.shards .shard-fig > svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; margin: 0; }
+html[data-broken] .field .fig, html[data-broken] .edge { animation-play-state: paused; }
+.nw { white-space: nowrap; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------------------------------------------------------------- narrow / short: band layout */
+@media (max-width: 599px) and (min-height: 561px), (max-width: 899px) and (orientation: portrait) and (min-height: 561px) {
+  .poster { display: block; padding: clamp(5rem, 22svh, 12rem) 16px clamp(1rem, 4svh, 3.5rem); }
+  .plane-wrap { margin: 0; width: auto; }
+  .plane { padding: clamp(1rem, 3svh, 1.5rem) clamp(1rem, 4vw, 1.5rem) clamp(1rem, 3.2svh, 1.75rem); }
+  .plane-wrap { max-width: none; }
+  .headline { font-size: clamp(.875rem, min(5vw, 2.5svh), 1.25rem); }
+  .hello { font-size: clamp(.9375rem, 2.2svh, 1.125rem); }
+  .facts { font-size: clamp(.8125rem, 2.1svh, .9375rem); text-wrap: balance; }
+  .from { display: block; }
+  .dash { display: none; }
+  .email { display: block; width: 100%; text-align: center; }
+  :root { --pad: clamp(1rem, 4vw, 1.5rem); }
+  .name { font-size: clamp(2rem, min(12vw, 7.5svh), 4rem); }
+  .e-tri { width: 5.5rem; top: -3.4rem; right: 12%; }
+  .e-stairs { width: 3.75rem; top: -1.25rem; right: -1rem; --axis: x; animation-name: slide-x; } /* beside the short greeting; slides along the top edge, away from the name */
+
+  .f-disc   { width: 40vw; left: -12vw; top: -9vw; }
+  .f-plus1  { width: 11vw; left: 33vw;  top: 6vw; }
+  .f-stairs { width: 20vw; left: 44vw;  top: 4vw; }
+  .f-ring   { width: 26vw; right: -9vw; top: 17vw; } /* below the theme control, not under it */
+  .f-plus2  { width: 8vw;  right: 4vw;  top: auto; bottom: 1rem; }
+  .f-tri    { width: 22vw; left: -6vw;  bottom: -5vw; }
+  .f-disc2  { width: 20vw; right: 22vw; bottom: -12vw; }
+  .f-ring2, .f-plus3 { display: none; }
+}
+/* small phones: give the plane the height so the contact stays above the fold */
+@media (max-width: 599px) and (min-height: 561px) and (max-height: 700px), (max-width: 359px) and (min-height: 561px) {
+  .poster { padding-top: clamp(4.5rem, 15svh, 6rem); padding-bottom: 1rem; }
+  .plane { padding: 1.25rem 2.5rem 1.25rem 1.25rem; }
+  :root { --pad: 1.25rem; }
+  .hello { margin-bottom: .35em; }
+  .name { font-size: clamp(2.25rem, 12vw, 3rem); }
+  .headline { margin-top: 1rem; font-size: .9375rem; line-height: 1.4; }
+  .facts { margin-top: .75rem; font-size: .875rem; line-height: 1.5; }
+  .actions { margin-top: 1rem; gap: .25rem 1rem; }
+  .email { font-size: .875rem; padding: .6em .8em; }
+  .linkedin { font-size: .875rem; }
+  .e-tri { width: 4rem; top: -2.4rem; }
+  .f-disc { width: 30vw; } .f-ring { width: 24vw; } .f-stairs { width: 15vw; } .f-plus1 { width: 9vw; }
+}
+@media (min-width: 600px) and (max-width: 899px) and (orientation: portrait) and (min-height: 561px) {
+  .f-disc { width: 30vw; } .f-ring { width: 22vw; } .f-stairs { width: 14vw; }
+  .poster { padding-top: clamp(6rem, 24svh, 14rem); }
+}
+
+/* tiny and short (split screens, landscape mini phones): keep a column for the theme control */
+@media (max-width: 599px) and (max-height: 560px) {
+  .plane-wrap { margin-left: .75rem; max-width: calc(100vw - 4.25rem); }
+  .poster { padding: .5rem 0; }
+  .name { line-height: .9; }
+  .headline { line-height: 1.2; }
+  .facts { line-height: 1.35; text-wrap: balance; }
+  .actions { gap: .25rem .75rem; }
+  .email { padding: .45em .7em; }
+  .shatter { right: 16px; top: calc(16px + 2.5rem + 8px); }
+}
+
+/* 404: the intact poster holds still, then breaks once */
+.field .fig, .edge { animation: none !important; }
+.email .back { width: .8em; height: .8em; margin-right: .45em; vertical-align: -.05em; }
+
+/* ---------------------------------------------------------------- page transitions
+   Same-origin navigations (the 404's "Back to homepage") morph: the plane resizes into the
+   homepage's plane, the figures keep their places. Browsers without support just navigate. */
+@view-transition { navigation: auto; }
+.plane { view-transition-name: plane; }
+.f-disc { view-transition-name: f-disc; } .f-ring { view-transition-name: f-ring; } .f-plus1 { view-transition-name: f-plus1; }
+.f-plus2 { view-transition-name: f-plus2; } .f-plus3 { view-transition-name: f-plus3; } .f-tri { view-transition-name: f-tri; }
+.f-disc2 { view-transition-name: f-disc2; } .f-ring2 { view-transition-name: f-ring2; } .f-stairs { view-transition-name: f-stairs; }
+.e-tri { view-transition-name: e-tri; } .e-stairs { view-transition-name: e-stairs; } .e-plus { view-transition-name: e-plus; }
+::view-transition-group(*) { animation-duration: .55s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+/* the plane grows instead of stretching: snapshots keep their size, anchored top-left, clipped to the growing box */
+::view-transition-group(plane) { overflow: clip; }
+::view-transition-old(plane), ::view-transition-new(plane) { width: auto; height: auto; object-fit: none; object-position: 0 0; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
+/* ---------------------------------------------------------------- motion off */
+@media (prefers-reduced-motion: reduce) {
+  .type { animation: none; }
+  .field .fig, .edge { animation: none; transition: none; }
+  .email, .linkedin, .theme svg { transition: none; }
+}
+</style>
+</head>
+<body>
+<!-- figure geometry: redrawn from the original 2015 landing PNGs and the 2022 CV vectors -->
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="c-disc"><circle cx="50" cy="50" r="50"/></clipPath>
+    <clipPath id="c-tri"><polygon points="2 2 98 18 18 98"/></clipPath>
+    <path id="wave" d="M-12 0q6-7 12 0t12 0t12 0t12 0t12 0t12 0t12 0t12 0t12 0t12 0"/>
+    <symbol id="s-disc" viewBox="0 0 100 100">
+      <g clip-path="url(#c-disc)" fill="none" stroke="currentColor" stroke-width="6"><use href="#wave" y="8"/><use href="#wave" y="22"/><use href="#wave" y="36"/><use href="#wave" y="50"/><use href="#wave" y="64"/><use href="#wave" y="78"/><use href="#wave" y="92"/></g>
+    </symbol>
+    <symbol id="s-tri" viewBox="0 0 100 100">
+      <path clip-path="url(#c-tri)" fill="none" stroke="currentColor" stroke-width="5" d="M8 0L0 8M23 0L0 23M38 0L0 38M53 0L0 53M68 0L0 68M83 0L0 83M98 0L0 98M113 0L0 113M128 0L0 128M143 0L0 143M158 0L0 158M173 0L0 173M188 0L0 188"/>
+    </symbol>
+    <symbol id="s-stairs" viewBox="0 0 100 100">
+      <path fill="none" stroke="currentColor" stroke-width="3.6" stroke-linejoin="miter" stroke-linecap="square" d="M2 98V78H22V58H42V38H62V18H82V2H98"/>
+    </symbol>
+    <symbol id="s-plus" viewBox="0 0 100 100">
+      <path fill="currentColor" d="M35 0h30v35h35v30H65v35H35V65H0V35h35z"/>
+    </symbol>
+    <symbol id="s-ring" viewBox="0 0 100 100">
+      <polygon fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="miter" points="50.0 3.0 54.2 9.7 59.8 4.0 62.5 11.5 69.1 7.1 70.2 14.9 77.6 12.0 77.1 19.9 84.9 18.6 82.8 26.2 90.7 26.5 87.0 33.5 94.7 35.5 89.6 41.6 96.7 45.1 90.5 50.0 96.7 54.9 89.6 58.4 94.7 64.5 87.0 66.5 90.7 73.5 82.8 73.8 84.9 81.4 77.1 80.1 77.6 88.0 70.2 85.1 69.1 92.9 62.5 88.5 59.8 96.0 54.2 90.3 50.0 97.0 45.8 90.3 40.2 96.0 37.5 88.5 30.9 92.9 29.8 85.1 22.4 88.0 22.9 80.1 15.1 81.4 17.2 73.8 9.3 73.5 13.0 66.5 5.3 64.5 10.4 58.4 3.3 54.9 9.5 50.0 3.3 45.1 10.4 41.6 5.3 35.5 13.0 33.5 9.3 26.5 17.2 26.2 15.1 18.6 22.9 19.9 22.4 12.0 29.8 14.9 30.9 7.1 37.5 11.5 40.2 4.0 45.8 9.7"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="poster">
+  <div class="field" aria-hidden="true">
+    <svg class="fig f-disc coral" viewBox="0 0 100 100" focusable="false"><use href="#s-disc"/></svg>
+    <svg class="fig f-ring ring" viewBox="0 0 100 100" focusable="false"><use href="#s-ring"/></svg>
+    <svg class="fig f-plus1 mint" viewBox="0 0 100 100" focusable="false"><use href="#s-plus"/></svg>
+    <svg class="fig f-plus2 mint" viewBox="0 0 100 100" focusable="false"><use href="#s-plus"/></svg>
+    <svg class="fig f-plus3 mint" viewBox="0 0 100 100" focusable="false"><use href="#s-plus"/></svg>
+    <svg class="fig f-stairs orchid" viewBox="0 0 100 100" focusable="false"><use href="#s-stairs"/></svg>
+    <svg class="fig f-tri orchid" viewBox="0 0 100 100" focusable="false"><use href="#s-tri"/></svg>
+    <svg class="fig f-disc2 coral" viewBox="0 0 100 100" focusable="false"><use href="#s-disc"/></svg>
+    <svg class="fig f-ring2 ring" viewBox="0 0 100 100" focusable="false"><use href="#s-ring"/></svg>
+  </div>
+
+
+  <main class="plane-wrap">
+    <div class="plane">
+      <h1><span class="name"><span>404</span></span></h1>
+      <p class="headline"><span>Page not found.</span></p>
+      <div class="actions">
+        <a class="email" href="/"><svg class="back" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M10 6H2.5M6 2.5L2.5 6 6 9.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Back to homepage</a>
+      </div>
+    </div>
+    <svg class="edge e-tri orchid" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#s-tri"/></svg>
+    <svg class="edge e-stairs orchid" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#s-stairs"/></svg>
+    <svg class="edge e-plus mint" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#s-plus"/></svg>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var d = document.documentElement, m = document.querySelector('meta[name="theme-color"]');
+    if (d.dataset.theme === "light") m.content = "#cae7ff";
+
+    /* break apart: every figure is sliced into strips that fall behind the plane; press again to rebuild */
+    var sb = document.querySelector(".shatter"), poster = document.querySelector(".poster");
+    var rmq = matchMedia("(prefers-reduced-motion: reduce)"), layer = null, front = null, anims = [], hidden = [], broken = false;
+    var wrap = document.querySelector(".plane-wrap");
+    function name() {}
+    function cleanup() {
+      anims.forEach(function (a) { a.cancel(); }); anims = [];
+      if (layer) { layer.remove(); layer = null; }
+      if (front) { front.remove(); front = null; }
+      hidden.forEach(function (f) { f.style.visibility = ""; }); hidden = [];
+      delete d.dataset.broken; broken = false; name();
+    }
+    function shatter() {
+      broken = true; d.dataset.broken = ""; name();
+      layer = document.createElement("div"); layer.className = "shards"; layer.setAttribute("aria-hidden", "true");
+      poster.insertBefore(layer, poster.firstChild);
+      front = layer.cloneNode(false); front.classList.add("front"); wrap.appendChild(front);
+      var W = innerWidth, H = innerHeight, rm = false;
+      /* text, button and link boxes: a front piece whose whole path stays clear of them may fall in front */
+      var text = [].map.call(document.querySelectorAll(".plane .type, .plane .name span, .headline span, .facts li, .email, .linkedin"), function (e) { return e.getBoundingClientRect(); });
+      function clear(a) { return text.every(function (t) { return a.r <= t.left || a.l >= t.right || a.b <= t.top || a.t >= t.bottom; }); }
+      [].forEach.call(document.querySelectorAll(".field .fig, .edge"), function (f, i) {
+        if (getComputedStyle(f).display === "none") return;
+        /* copy the figure's exact state (frozen ambient translate/rotate + pointer nudge) onto a wrapper,
+           so the last frame of a rebuild lands pixel-true on the real figure */
+        var cs = getComputedStyle(f), tr = cs.translate, ro = cs.rotate, tf = f.style.transform;
+        f.style.setProperty("transition", "none", "important");
+        ["translate", "rotate", "transform"].forEach(function (p) { f.style.setProperty(p, "none", "important"); });
+        var r = f.getBoundingClientRect();
+        f.style.removeProperty("translate"); f.style.removeProperty("rotate"); f.style.removeProperty("transform");
+        f.style.transform = tf; f.getBoundingClientRect(); f.style.removeProperty("transition");
+        hidden.push(f); f.style.visibility = "hidden";
+        if (r.bottom < 0 || r.top > H || r.right < 0 || r.left > W) return;
+        var colour = (f.getAttribute("class").match(/\b(coral|orchid|mint|ring)\b/) || [""])[0];
+        var cls = f.getAttribute("class"), inFront = /e-stairs|e-plus/.test(cls), out = /e-stairs/.test(cls) ? 1 : /e-plus/.test(cls) ? -1 : 0;
+        var n = Math.max(3, Math.min(7, Math.round(r.height / 40))), sh = r.height / n, delay = Math.random() * 250, wraps = {};
+        function holder(into) {
+          var key = into === front ? "f" : "b";
+          if (!wraps[key]) {
+            var w = document.createElement("div"); w.className = "shard-fig " + colour;
+            w.style.cssText = "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + r.height + "px;translate:" + tr + ";rotate:" + ro + ";transform:" + (tf || "none");
+            into.appendChild(w); wraps[key] = w;
+          }
+          return wraps[key];
+        }
+        for (var k = 0; k < n; k++) {
+          var c = f.cloneNode(true);
+          c.removeAttribute("class");
+          c.style.cssText = "visibility:visible;clip-path:inset(" + (k * 100 / n) + "% 0 " + ((n - k - 1) * 100 / n) + "% 0);transform-origin:50% " + ((k + .5) * 100 / n) + "%";
+          var top = r.top + k * sh, floor = H - sh * (.25 + Math.random() * .6);
+          var dy = floor - (top + sh), cx = r.left + r.width / 2;
+          var dx = out ? out * Math.random() * 50 : (Math.random() - .5) * 120;
+          dx = Math.max(-cx + 20, Math.min(W - 20 - cx, dx));
+          /* the strip's swept box (start to rest, padded for the spin) decides its layer */
+          var m = Math.max(r.width, sh) / 2, x0 = r.left, x1 = r.left + dx;
+          var swept = { l: Math.min(x0, x1) - m * .3, r: Math.max(x0, x1) + r.width + m * .3, t: top - m * .3, b: top + sh + Math.max(dy, 0) + m * .3 };
+          holder(inFront && clear(swept) ? front : layer).appendChild(c);
+          if (rm) { anims.push(c.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: "forwards" })); continue; }
+          var rot = (Math.random() < .5 ? -1 : 1) * (20 + Math.random() * 140);
+          anims.push(c.animate([
+            { transform: "translate(0,0) rotate(0deg)", easing: "cubic-bezier(.45,0,1,1)" },
+            { transform: "translate(" + dx + "px," + dy + "px) rotate(" + rot + "deg)", offset: .8, easing: "ease-out" },
+            { transform: "translate(" + dx + "px," + (dy - Math.min(18, sh * .4)) + "px) rotate(" + rot * 1.04 + "deg)", offset: .9, easing: "ease-in" },
+            { transform: "translate(" + dx + "px," + dy + "px) rotate(" + rot * 1.05 + "deg)" }
+          ], { duration: 900 + Math.random() * 600, delay: delay + k * 30, fill: "both" }));
+        }
+      });
+    }
+    /* a broken link: break once, 700ms after the plane appears, and stay down */
+    /* every load starts whole and breaks once; reduced motion: nothing happens, the figures stay whole */
+    function go() { shatter(); }
+    if (!rmq.matches) (function ready() { if (d.classList.contains("fl")) return requestAnimationFrame(ready); setTimeout(go, 700); })();
+    addEventListener("resize", function () { if (layer) { cleanup(); shatter(); anims.forEach(function (a) { a.finish(); }); } });
+    /* "Back to homepage": first the pieces fly back (the link gets fixed), then the page morphs into the homepage */
+    var back = document.querySelector(".plane .email"), leaving = false;
+    back.addEventListener("click", function (e) {
+      if (rmq.matches || !layer || leaving || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+      e.preventDefault(); leaving = true;
+      function home() { if (!leaving) return; leaving = false; cleanup(); location.href = back.href; }
+      anims.forEach(function (a) { a.playbackRate = -2.6; a.play(); }); /* finished animations need play() to run again */
+      Promise.all(anims.map(function (a) { return a.finished; })).then(home, home);
+      setTimeout(home, 1400); /* never keep the visitor waiting */
+    });
+
+  })();
+</script>
+</body>
+</html>

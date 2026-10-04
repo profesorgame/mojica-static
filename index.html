@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  /* before first paint: restore the visitor's choice; dark is the default (David). Shared with the CV via the same key */
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem("theme"); } catch (e) {}
+    if (t !== "light" && t !== "dark") t = "dark";
+    var d = document.documentElement;
+    d.dataset.theme = t;
+    d.classList.add("js", "fl");
+    /* hold the identity plane (visibility only, no layout cost) for the few ms the
+       embedded font takes to decode, so nothing ever lays out in a fallback face */
+    function ready() { requestAnimationFrame(function () { requestAnimationFrame(function () { d.classList.remove("fl"); }); }); }
+    setTimeout(ready, 1500);
+    if (document.fonts && document.fonts.load) document.fonts.load('700 1em "Roboto Mono"').then(ready, ready);
+    /* arriving through a cross-document view transition: the new page's snapshot must include the plane */
+    addEventListener("pagereveal", function (e) { if (e.viewTransition) d.classList.remove("fl"); });
+  })();
+</script>
+<title>David Mojica — Software Engineering · Technical Leadership · Product Strategy</title>
+<meta name="description" content="David Mojica Zahonero, Technical Lead at Leica Geosystems in St. Gallen, Switzerland. Software engineering, technical leadership and product strategy. Say hello by email or on LinkedIn.">
+<link rel="canonical" href="https://www.davidmojica.es/">
+<meta name="theme-color" content="#111827">
+<meta property="og:type" content="website">
+<meta property="og:title" content="David Mojica — Software Engineering · Technical Leadership · Product Strategy">
+<meta property="og:description" content="Technical Lead at Leica Geosystems, St. Gallen. In software since 2017. Say hello.">
+<meta property="og:url" content="https://www.davidmojica.es/">
+<meta property="og:image" content="https://www.davidmojica.es/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111827'/%3E%3CclipPath id='c'%3E%3Ccircle cx='16' cy='16' r='12'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23c)' fill='none' stroke='%23f16476' stroke-width='3.2'%3E%3Cpath d='M2 9q3.5-3 7 0t7 0 7 0 7 0M2 16q3.5-3 7 0t7 0 7 0 7 0M2 23q3.5-3 7 0t7 0 7 0 7 0'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+/* fonts:start */@font-face{font-family:"Roboto Mono";font-style:normal;font-weight:400 700;font-display:block;src:url(data:font/woff2;base64,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) format("woff2")}/* Roboto Mono (c) The Roboto Mono Project Authors, SIL Open Font License 1.1 *//* fonts:end */
+
+/* metric-matched fallback: every face here advances 0.6em, like Roboto Mono, so the
+   few ms before the embedded font is decoded never re-flow anything */
+@font-face { font-family: "RM Fallback"; src: local("Menlo"), local("Liberation Mono"), local("Courier New"), local("Cousine"), local("DejaVu Sans Mono"); }
+
+/* ---------------------------------------------------------------- tokens
+   Brand authority: the pre-AI originals (docs/brand-originals/).
+   Dark = the 2015 landing's gray-900; light = the 2022 CV's blue.
+   The identity plane is always the other world. */
+:root {
+  color-scheme: dark;
+  --ground: #111827;
+  --plane: #cae7ff;
+  --plane-ink: #050a30;
+  --plane-ink-2: #364164;
+  --btn-bg: #050a30;
+  --btn-ink: #cae7ff;
+  --control: #cae7ff;
+  --coral: #f16476;
+  --orchid: #eb83f8;
+  --mint: #83f09a;
+  --ring: #cae7ff;
+  --pad: clamp(.75rem, min(4vw, 5.5vh), 3.5rem); /* scales with height too: the poster fits one screen */
+}
+html[data-theme="light"] {
+  color-scheme: light;
+  --ground: #cae7ff;
+  --plane: #050a30;
+  --plane-ink: #ffffff;
+  --plane-ink-2: #cae7ff;
+  --btn-bg: #cae7ff;
+  --btn-ink: #050a30;
+  --control: #050a30;
+  --coral: #d6405a;
+  --orchid: #9b3fc0;
+  --mint: #050a30;
+  --ring: #050a30;
+}
+
+/* ---------------------------------------------------------------- base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.defs { position: absolute; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+/* very large screens: the whole rem scale grows with the viewport, so the plane keeps its share of the poster */
+@media (min-width: 1800px) and (min-height: 900px) { html { font-size: clamp(100%, min(1.111vw, 1.778vh), 150%); } }
+body {
+  font-family: "Roboto Mono", "RM Fallback", monospace;
+  font-synthesis: none;
+  line-height: 1.5;
+  font-weight: 400;
+  background: var(--ground);
+  color: var(--plane-ink);
+  overflow-x: clip;
+  caret-color: var(--plane-ink);
+  accent-color: var(--plane-ink);
+}
+::selection { background: var(--plane-ink); color: var(--plane); }
+:focus-visible { outline: 2px solid var(--control); outline-offset: 3px; }
+.plane :focus-visible { outline-color: var(--plane-ink); }
+
+/* ---------------------------------------------------------------- poster */
+.poster {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: clamp(.5rem, 6vh, 7rem) 0;
+  isolation: isolate;
+  overflow-x: clip;
+}
+
+/* the field: David's original figures, still, bleeding off every edge */
+.field { position: absolute; inset: 0; overflow: hidden; z-index: -1; }
+.fig { position: absolute; display: block; overflow: visible; }
+/* the 2015 landing's move-up / move-down, toned down: each figure on its own cycle */
+.field .fig {
+  animation: bob var(--t, 7s) ease-in-out var(--d, 0s) infinite alternate;
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+@keyframes bob { from { translate: 0 calc(var(--a, 10px) * -1); } to { translate: 0 var(--a, 10px); } }
+.f-disc   { --a: 12px; --t: 7s;   --d: -1s; }
+.f-ring   { --a: 10px; --t: 9s;   --d: -4s; }
+.f-plus1  { --a: 14px; --t: 5s;   --d: -2s; }
+.f-plus2  { --a: 9px;  --t: 6.5s; --d: -5s; }
+.f-plus3  { --a: 12px; --t: 5.5s; --d: -3s; }
+.f-tri    { --a: 11px; --t: 8s;   --d: -6s; }
+.f-disc2  { --a: 13px; --t: 6s;   --d: -2.5s; }
+.f-ring2  { --a: 8px;  --t: 8.5s; --d: -1.5s; }
+.f-stairs { --a: 10px; --t: 7.5s; --d: -3.5s; }
+.coral { color: var(--coral); }
+.orchid { color: var(--orchid); }
+.mint { color: var(--mint); }
+.ring { color: var(--ring); }
+
+.f-disc   { width: min(36vw, 58vh); left: -9vw;  top: -16vh; }
+.f-ring   { width: min(22vw, 36vh); right: 9vw;   top: 6vh; }
+.f-plus1  { width: min(6vw, 10vh);  left: 56vw;  top: 15vh; }
+.f-plus2  { width: min(10vw, 16vh); right: -3vw;  top: 50vh; }
+.f-plus3  { width: min(4vw, 6vh);   left: 52vw;  bottom: 5vh; }
+.f-tri    { width: min(22vw, 36vh); left: -5vw;  bottom: -12vh; }
+.f-disc2  { width: min(20vw, 32vh); right: 13vw; bottom: -11vh; }
+.f-ring2  { width: min(13vw, 21vh); right: -4vw; bottom: 6vh; }
+.f-stairs { width: min(18vw, 30vh); left: 57vw;  top: 44vh; }
+
+@media (min-width: 1600px) {
+  .f-ring { width: 22vw; } .f-stairs { width: 18vw; left: 53vw; } .f-plus1 { width: 6vw; left: 47vw; } .f-plus3 { left: 44vw; }
+}
+
+/* the identity plane: one flat colour field inside the poster */
+.fl .plane-wrap { visibility: hidden; }
+.plane-wrap {
+  position: relative;
+  z-index: 1;
+  margin-left: clamp(1rem, 9vw, 14rem);
+  width: fit-content;
+  max-width: calc(100vw - 2rem);
+}
+.plane {
+  position: relative;
+  background: var(--plane);
+  padding: var(--pad) calc(var(--pad) * 1.75) var(--pad) var(--pad);
+}
+/* figures locked to the plane's edges; they live in its padding, never on text */
+.edge { position: absolute; pointer-events: none; }
+.e-stairs { width: calc(var(--pad) * 2.6); right: calc(var(--pad) * -1.3); top: 30%; z-index: 2; }
+.e-plus   { width: calc(var(--pad) * 1.5); left: calc(var(--pad) * -1.05); bottom: calc(var(--pad) * -.3); z-index: 2; } /* bites the left edge, two-thirds on the ground */
+/* edge figures move only along the edge they bite, never toward the text */
+.edge { transition: transform .6s cubic-bezier(.16, 1, .3, 1); }
+.e-tri    { --axis: x; animation: slide-x 9s ease-in-out -2s infinite alternate; }
+.e-stairs { --axis: y; animation: slide-y 8s ease-in-out -5s infinite alternate; }
+.e-plus   { --axis: r; animation: wobble 11s ease-in-out -3s infinite alternate; }
+@keyframes slide-x { from { translate: -10px 0; } to { translate: 10px 0; } }
+@keyframes slide-y { from { translate: 0 -8px; } to { translate: 0 8px; } }
+@keyframes wobble { from { rotate: -8deg; } to { rotate: 8deg; } }
+.e-tri    { width: calc(var(--pad) * 3.4); right: 18%; top: calc(var(--pad) * -2.2); z-index: -1; }
+
+/* ---------------------------------------------------------------- type */
+h1 { font-weight: 700; }
+.hello {
+  display: block;
+  font-weight: 400;
+  font-size: clamp(.8125rem, min(1.25vw, 2.2vh), 1.25rem);
+  line-height: 1.4;
+  height: 1.4em; /* fixed line box: the typing never moves the name */
+  margin-bottom: clamp(.15em, 1vh, .6em);
+}
+.type {
+  display: inline-block;
+  vertical-align: top;
+  height: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  width: calc(10ch + .15em); /* 10 chars plus subpixel slack */
+  border-right: .09em solid transparent;
+  animation: type .6s steps(10, end) .2s both, caret 1s steps(1, end) .2s 7; /* slow blink, lingers ~7s */
+}
+@keyframes type { from { width: 0; } to { width: calc(10ch + .15em); } }
+@keyframes caret { 0% { border-right-color: currentColor; } 50% { border-right-color: transparent; } }
+.name {
+  display: block;
+  font-size: clamp(1.75rem, min(6.5vw, 10vh), 6rem);
+  line-height: .95;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+}
+.name > span { display: block; }
+.headline {
+  margin-top: clamp(.4rem, min(2vw, 2.6vh), 1.6rem);
+  font-weight: 500;
+  font-size: clamp(.875rem, min(1.5vw, 2.45vh), 1.375rem);
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
+.headline > span:not(.sr) { display: block; white-space: nowrap; } /* one discipline per line, never split */
+.facts {
+  list-style: none;
+  margin-top: clamp(.4rem, min(1.6vw, 2vh), 1.25rem);
+  color: var(--plane-ink-2);
+  font-size: clamp(.8125rem, min(1.1vw, 2vh), 1.125rem);
+  line-height: clamp(1.35, .9 + 1vh, 1.6);
+}
+.actions {
+  margin-top: clamp(.5rem, min(2.4vw, 3vh), 1.875rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem 1.5rem;
+}
+.email {
+  display: inline-block;
+  white-space: nowrap;
+  padding: .75em 1.25em;
+  border: 2px solid var(--btn-bg);
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+  font-weight: 500;
+  font-size: clamp(.8125rem, 2.2vh, 1rem);
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background-color .12s, color .12s;
+}
+.email:hover { background: transparent; color: var(--plane-ink); }
+.linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
+  min-height: 2.25rem;
+  color: var(--plane-ink);
+  font-size: clamp(.8125rem, 2.2vh, 1rem);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .22em;
+  transition: text-decoration-thickness .12s;
+}
+.linkedin:hover { text-decoration-thickness: 3px; }
+.linkedin svg { width: .8em; height: .8em; }
+
+/* ---------------------------------------------------------------- theme control */
+.theme {
+  display: none;
+  position: absolute;
+  z-index: 3;
+  top: 16px;
+  right: 16px;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: .45rem;
+  color: var(--control);
+  background: var(--ground);
+  border: 2px solid var(--control);
+  cursor: pointer;
+}
+.theme svg { display: block; width: 100%; height: 100%; transition: rotate .3s cubic-bezier(.16, 1, .3, 1); }
+.theme:hover svg { rotate: 180deg; }
+.js .theme { display: block; }
+/* break-apart control: the theme control's twin, one slot to its left */
+.shatter {
+  display: none; position: absolute; z-index: 3; top: 16px; right: calc(16px + 2.5rem + 8px);
+  width: 2.5rem; height: 2.5rem; padding: .45rem;
+  color: var(--control); background: var(--ground); border: 2px solid var(--control); cursor: pointer;
+}
+.shatter svg { display: block; width: 100%; height: 100%; }
+.shatter:hover, html[data-broken] .shatter { background: var(--control); color: var(--ground); }
+.js .shatter { display: block; }
+/* broken figures: strips in a fixed layer behind the plane; ambient motion paused */
+.shards { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.shards.front { z-index: 2; } /* inside .plane-wrap: the pieces of the figures that sit in front of the plane stay in front */
+.shards .shard-fig { position: fixed; transform-origin: 50% 50%; }
+.shards .shard-fig > svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; margin: 0; }
+html[data-broken] .field .fig, html[data-broken] .edge { animation-play-state: paused; }
+.nw { white-space: nowrap; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------------------------------------------------------------- narrow / short: band layout */
+@media (max-width: 599px) and (min-height: 561px), (max-width: 899px) and (orientation: portrait) and (min-height: 561px) {
+  .poster { display: block; padding: clamp(5rem, 22svh, 12rem) 16px clamp(1rem, 4svh, 3.5rem); }
+  .plane-wrap { margin: 0; width: auto; }
+  .plane { padding: clamp(1rem, 3svh, 1.5rem) clamp(1rem, 4vw, 1.5rem) clamp(1rem, 3.2svh, 1.75rem); }
+  .plane-wrap { max-width: none; }
+  .headline { font-size: clamp(.875rem, min(5vw, 2.5svh), 1.25rem); }
+  .hello { font-size: clamp(.9375rem, 2.2svh, 1.125rem); }
+  .facts { font-size: clamp(.8125rem, 2.1svh, .9375rem); text-wrap: balance; }
+  .from { display: block; }
+  .dash { display: none; }
+  .email { display: block; width: 100%; text-align: center; }
+  :root { --pad: clamp(1rem, 4vw, 1.5rem); }
+  .name { font-size: clamp(2rem, min(12vw, 7.5svh), 4rem); }
+  .e-tri { width: 5.5rem; top: -3.4rem; right: 12%; }
+  .e-stairs { width: 3.75rem; top: -1.25rem; right: -1rem; --axis: x; animation-name: slide-x; } /* beside the short greeting; slides along the top edge, away from the name */
+
+  .f-disc   { width: 40vw; left: -12vw; top: -9vw; }
+  .f-plus1  { width: 11vw; left: 33vw;  top: 6vw; }
+  .f-stairs { width: 20vw; left: 44vw;  top: 4vw; }
+  .f-ring   { width: 26vw; right: -9vw; top: 17vw; } /* below the theme control, not under it */
+  .f-plus2  { width: 8vw;  right: 4vw;  top: auto; bottom: 1rem; }
+  .f-tri    { width: 22vw; left: -6vw;  bottom: -5vw; }
+  .f-disc2  { width: 20vw; right: 22vw; bottom: -12vw; }
+  .f-ring2, .f-plus3 { display: none; }
+}
+/* small phones: give the plane the height so the contact stays above the fold */
+@media (max-width: 599px) and (min-height: 561px) and (max-height: 700px), (max-width: 359px) and (min-height: 561px) {
+  .poster { padding-top: clamp(4.5rem, 15svh, 6rem); padding-bottom: 1rem; }
+  .plane { padding: 1.25rem 2.5rem 1.25rem 1.25rem; }
+  :root { --pad: 1.25rem; }
+  .hello { margin-bottom: .35em; }
+  .name { font-size: clamp(2.25rem, 12vw, 3rem); }
+  .headline { margin-top: 1rem; font-size: .9375rem; line-height: 1.4; }
+  .facts { margin-top: .75rem; font-size: .875rem; line-height: 1.5; }
+  .actions { margin-top: 1rem; gap: .25rem 1rem; }
+  .email { font-size: .875rem; padding: .6em .8em; }
+  .linkedin { font-size: .875rem; }
+  .e-tri { width: 4rem; top: -2.4rem; }
+  .f-disc { width: 30vw; } .f-ring { width: 24vw; } .f-stairs { width: 15vw; } .f-plus1 { width: 9vw; }
+}
+@media (min-width: 600px) and (max-width: 899px) and (orientation: portrait) and (min-height: 561px) {
+  .f-disc { width: 30vw; } .f-ring { width: 22vw; } .f-stairs { width: 14vw; }
+  .poster { padding-top: clamp(6rem, 24svh, 14rem); }
+}
+
+/* tiny and short (split screens, landscape mini phones): keep a column for the theme control */
+@media (max-width: 599px) and (max-height: 560px) {
+  .plane-wrap { margin-left: .75rem; max-width: calc(100vw - 4.25rem); }
+  .poster { padding: .5rem 0; }
+  .name { line-height: .9; }
+  .headline { line-height: 1.2; }
+  .facts { line-height: 1.35; text-wrap: balance; }
+  .actions { gap: .25rem .75rem; }
+  .email { padding: .45em .7em; }
+  .shatter { right: 16px; top: calc(16px + 2.5rem + 8px); }
+}
+
+/* ---------------------------------------------------------------- page transitions
+   Same-origin navigations (the 404's "Back to homepage") morph: the plane resizes into the
+   homepage's plane, the figures keep their places. Browsers without support just navigate. */
+@view-transition { navigation: auto; }
+.plane { view-transition-name: plane; }
+.f-disc { view-transition-name: f-disc; } .f-ring { view-transition-name: f-ring; } .f-plus1 { view-transition-name: f-plus1; }
+.f-plus2 { view-transition-name: f-plus2; } .f-plus3 { view-transition-name: f-plus3; } .f-tri { view-transition-name: f-tri; }
+.f-disc2 { view-transition-name: f-disc2; } .f-ring2 { view-transition-name: f-ring2; } .f-stairs { view-transition-name: f-stairs; }
+.e-tri { view-transition-name: e-tri; } .e-stairs { view-transition-name: e-stairs; } .e-plus { view-transition-name: e-plus; }
+::view-transition-group(*) { animation-duration: .55s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+/* the plane grows instead of stretching: snapshots keep their size, anchored top-left, clipped to the growing box */
+::view-transition-group(plane) { overflow: clip; }
+::view-transition-old(plane), ::view-transition-new(plane) { width: auto; height: auto; object-fit: none; object-position: 0 0; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
+/* ---------------------------------------------------------------- motion off */
+@media (prefers-reduced-motion: reduce) {
+  .type { animation: none; }
+  .field .fig, .edge { animation: none; transition: none; }
+  .email, .linkedin, .theme svg { transition: none; }
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "David Mojica Zahonero",
+  "jobTitle": "Technical Lead",
+  "worksFor": { "@type": "Organization", "name": "Leica Geosystems" },
+  "address": { "@type": "PostalAddress", "addressLocality": "St. Gallen", "addressCountry": "CH" },
+  "email": "contact@davidmojica.es",
+  "url": "https://www.davidmojica.es/",
+  "sameAs": ["https://www.linkedin.com/in/davidmojica/"],
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "Universitat Politècnica de València" },
+  "knowsLanguage": ["es", "en"]
+}
+</script>
+</head>
+<body>
+<!-- figure geometry: redrawn from the original 2015 landing PNGs and the 2022 CV vectors -->
+<svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="c-disc"><circle cx="50" cy="50" r="50"/></clipPath>
+    <clipPath id="c-tri"><polygon points="2 2 98 18 18 98"/></clipPath>
+    <path id="wave" d="M-12 0q6-7 12 0t12 0t12 0t12 0t12 0t12 0t12 0t12 0t12 0t12 0"/>
+    <symbol id="s-disc" viewBox="0 0 100 100">
+      <g clip-path="url(#c-disc)" fill="none" stroke="currentColor" stroke-width="6"><use href="#wave" y="8"/><use href="#wave" y="22"/><use href="#wave" y="36"/><use href="#wave" y="50"/><use href="#wave" y="64"/><use href="#wave" y="78"/><use href="#wave" y="92"/></g>
+    </symbol>
+    <symbol id="s-tri" viewBox="0 0 100 100">
+      <path clip-path="url(#c-tri)" fill="none" stroke="currentColor" stroke-width="5" d="M8 0L0 8M23 0L0 23M38 0L0 38M53 0L0 53M68 0L0 68M83 0L0 83M98 0L0 98M113 0L0 113M128 0L0 128M143 0L0 143M158 0L0 158M173 0L0 173M188 0L0 188"/>
+    </symbol>
+    <symbol id="s-stairs" viewBox="0 0 100 100">
+      <path fill="none" stroke="currentColor" stroke-width="3.6" stroke-linejoin="miter" stroke-linecap="square" d="M2 98V78H22V58H42V38H62V18H82V2H98"/>
+    </symbol>
+    <symbol id="s-plus" viewBox="0 0 100 100">
+      <path fill="currentColor" d="M35 0h30v35h35v30H65v35H35V65H0V35h35z"/>
+    </symbol>
+    <symbol id="s-ring" viewBox="0 0 100 100">
+      <polygon fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="miter" points="50.0 3.0 54.2 9.7 59.8 4.0 62.5 11.5 69.1 7.1 70.2 14.9 77.6 12.0 77.1 19.9 84.9 18.6 82.8 26.2 90.7 26.5 87.0 33.5 94.7 35.5 89.6 41.6 96.7 45.1 90.5 50.0 96.7 54.9 89.6 58.4 94.7 64.5 87.0 66.5 90.7 73.5 82.8 73.8 84.9 81.4 77.1 80.1 77.6 88.0 70.2 85.1 69.1 92.9 62.5 88.5 59.8 96.0 54.2 90.3 50.0 97.0 45.8 90.3 40.2 96.0 37.5 88.5 30.9 92.9 29.8 85.1 22.4 88.0 22.9 80.1 15.1 81.4 17.2 73.8 9.3 73.5 13.0 66.5 5.3 64.5 10.4 58.4 3.3 54.9 9.5 50.0 3.3 45.1 10.4 41.6 5.3 35.5 13.0 33.5 9.3 26.5 17.2 26.2 15.1 18.6 22.9 19.9 22.4 12.0 29.8 14.9 30.9 7.1 37.5 11.5 40.2 4.0 45.8 9.7"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="poster">
+  <div class="field" aria-hidden="true">
+    <svg class="fig f-disc coral" viewBox="0 0 100 100" focusable="false"><use href="#s-disc"/></svg>
+    <svg class="fig f-ring ring" viewBox="0 0 100 100" focusable="false"><use href="#s-ring"/></svg>
+    <svg class="fig f-plus1 mint" viewBox="0 0 100 100" focusable="false"><use href="#s-plus"/></svg>
+    <svg class="fig f-plus2 mint" viewBox="0 0 100 100" focusable="false"><use href="#s-plus"/></svg>
+    <svg class="fig f-plus3 mint" viewBox="0 0 100 100" focusable="false"><use href="#s-plus"/></svg>
+    <svg class="fig f-stairs orchid" viewBox="0 0 100 100" focusable="false"><use href="#s-stairs"/></svg>
+    <svg class="fig f-tri orchid" viewBox="0 0 100 100" focusable="false"><use href="#s-tri"/></svg>
+    <svg class="fig f-disc2 coral" viewBox="0 0 100 100" focusable="false"><use href="#s-disc"/></svg>
+    <svg class="fig f-ring2 ring" viewBox="0 0 100 100" focusable="false"><use href="#s-ring"/></svg>
+  </div>
+
+  <button class="shatter" type="button" aria-label="Break the figures apart"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 3.5h7v7h-7z"/><path d="M13.5 2.5h7v7h-7z" transform="rotate(12 17 6)"/><path d="M4 14h7v7H4z" transform="rotate(-9 7.5 17.5)"/><path d="M14.5 14.5h6v6h-6z" transform="rotate(20 17.5 17.5)"/></g></svg></button>
+  <button class="theme" type="button" aria-label="Switch to light theme"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+
+  <main class="plane-wrap">
+    <div class="plane">
+      <h1><span class="hello"><span class="type">Hello! I'm</span></span> <span class="name"><span>David</span> <span>Mojica</span></span></h1>
+      <p class="headline"><span>Software Engineering</span><span class="sr"> · </span><span>Technical Leadership</span><span class="sr"> · </span><span>Product Strategy</span></p>
+      <ul class="facts">
+        <li>Technical Lead at <span class="nw">Leica Geosystems</span></li>
+        <li><span class="nw">St. Gallen, Switzerland</span> <span class="from"><span class="dash">— </span>from València</span></li>
+        <li>In software since 2017</li>
+      </ul>
+      <div class="actions">
+        <a class="email" href="mailto:contact@davidmojica.es">contact@davidmojica.es</a>
+        <a class="linkedin" href="https://www.linkedin.com/in/davidmojica/" target="_blank" rel="noreferrer">LinkedIn<svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9L9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="sr">(opens in a new tab)</span></a>
+      </div>
+    </div>
+    <svg class="edge e-tri orchid" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#s-tri"/></svg>
+    <svg class="edge e-stairs orchid" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#s-stairs"/></svg>
+    <svg class="edge e-plus mint" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><use href="#s-plus"/></svg>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var d = document.documentElement, b = document.querySelector(".theme"), m = document.querySelector('meta[name="theme-color"]');
+    function paint() {
+      var light = d.dataset.theme === "light";
+      b.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+      m.content = light ? "#cae7ff" : "#111827";
+    }
+    b.addEventListener("click", function () {
+      d.dataset.theme = d.dataset.theme === "light" ? "dark" : "light";
+      try { localStorage.setItem("theme", d.dataset.theme); } catch (e) {}
+      paint();
+    });
+    paint();
+
+    /* break apart: every figure is sliced into strips that fall behind the plane; press again to rebuild */
+    var sb = document.querySelector(".shatter"), poster = document.querySelector(".poster");
+    var rmq = matchMedia("(prefers-reduced-motion: reduce)"), layer = null, front = null, anims = [], hidden = [], broken = false;
+    var wrap = document.querySelector(".plane-wrap");
+    function name() { sb.setAttribute("aria-label", broken ? "Put the figures back" : "Break the figures apart"); }
+    function cleanup() {
+      anims.forEach(function (a) { a.cancel(); }); anims = [];
+      if (layer) { layer.remove(); layer = null; }
+      if (front) { front.remove(); front = null; }
+      hidden.forEach(function (f) { f.style.visibility = ""; }); hidden = [];
+      delete d.dataset.broken; broken = false; name();
+    }
+    function shatter() {
+      broken = true; d.dataset.broken = ""; name();
+      layer = document.createElement("div"); layer.className = "shards"; layer.setAttribute("aria-hidden", "true");
+      poster.insertBefore(layer, poster.firstChild);
+      front = layer.cloneNode(false); front.classList.add("front"); wrap.appendChild(front);
+      var W = innerWidth, H = innerHeight, rm = rmq.matches;
+      /* text, button and link boxes: a front piece whose whole path stays clear of them may fall in front */
+      var text = [].map.call(document.querySelectorAll(".plane .type, .plane .name span, .headline span, .facts li, .email, .linkedin"), function (e) { return e.getBoundingClientRect(); });
+      function clear(a) { return text.every(function (t) { return a.r <= t.left || a.l >= t.right || a.b <= t.top || a.t >= t.bottom; }); }
+      [].forEach.call(document.querySelectorAll(".field .fig, .edge"), function (f, i) {
+        if (getComputedStyle(f).display === "none") return;
+        /* copy the figure's exact state (frozen ambient translate/rotate + pointer nudge) onto a wrapper,
+           so the last frame of a rebuild lands pixel-true on the real figure */
+        var cs = getComputedStyle(f), tr = cs.translate, ro = cs.rotate, tf = f.style.transform;
+        f.style.setProperty("transition", "none", "important");
+        ["translate", "rotate", "transform"].forEach(function (p) { f.style.setProperty(p, "none", "important"); });
+        var r = f.getBoundingClientRect();
+        f.style.removeProperty("translate"); f.style.removeProperty("rotate"); f.style.removeProperty("transform");
+        f.style.transform = tf; f.getBoundingClientRect(); f.style.removeProperty("transition");
+        hidden.push(f); f.style.visibility = "hidden";
+        if (r.bottom < 0 || r.top > H || r.right < 0 || r.left > W) return;
+        var colour = (f.getAttribute("class").match(/\b(coral|orchid|mint|ring)\b/) || [""])[0];
+        var cls = f.getAttribute("class"), inFront = /e-stairs|e-plus/.test(cls), out = /e-stairs/.test(cls) ? 1 : /e-plus/.test(cls) ? -1 : 0;
+        var n = Math.max(3, Math.min(7, Math.round(r.height / 40))), sh = r.height / n, delay = Math.random() * 250, wraps = {};
+        function holder(into) {
+          var key = into === front ? "f" : "b";
+          if (!wraps[key]) {
+            var w = document.createElement("div"); w.className = "shard-fig " + colour;
+            w.style.cssText = "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + r.height + "px;translate:" + tr + ";rotate:" + ro + ";transform:" + (tf || "none");
+            into.appendChild(w); wraps[key] = w;
+          }
+          return wraps[key];
+        }
+        for (var k = 0; k < n; k++) {
+          var c = f.cloneNode(true);
+          c.removeAttribute("class");
+          c.style.cssText = "visibility:visible;clip-path:inset(" + (k * 100 / n) + "% 0 " + ((n - k - 1) * 100 / n) + "% 0);transform-origin:50% " + ((k + .5) * 100 / n) + "%";
+          var top = r.top + k * sh, floor = H - sh * (.25 + Math.random() * .6);
+          var dy = floor - (top + sh), cx = r.left + r.width / 2;
+          var dx = out ? out * Math.random() * 50 : (Math.random() - .5) * 120;
+          dx = Math.max(-cx + 20, Math.min(W - 20 - cx, dx));
+          /* the strip's swept box (start to rest, padded for the spin) decides its layer */
+          var m = Math.max(r.width, sh) / 2, x0 = r.left, x1 = r.left + dx;
+          var swept = { l: Math.min(x0, x1) - m * .3, r: Math.max(x0, x1) + r.width + m * .3, t: top - m * .3, b: top + sh + Math.max(dy, 0) + m * .3 };
+          holder(inFront && clear(swept) ? front : layer).appendChild(c);
+          if (rm) { anims.push(c.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: "forwards" })); continue; }
+          var rot = (Math.random() < .5 ? -1 : 1) * (20 + Math.random() * 140);
+          anims.push(c.animate([
+            { transform: "translate(0,0) rotate(0deg)", easing: "cubic-bezier(.45,0,1,1)" },
+            { transform: "translate(" + dx + "px," + dy + "px) rotate(" + rot + "deg)", offset: .8, easing: "ease-out" },
+            { transform: "translate(" + dx + "px," + (dy - Math.min(18, sh * .4)) + "px) rotate(" + rot * 1.04 + "deg)", offset: .9, easing: "ease-in" },
+            { transform: "translate(" + dx + "px," + dy + "px) rotate(" + rot * 1.05 + "deg)" }
+          ], { duration: 900 + Math.random() * 600, delay: delay + k * 30, fill: "both" }));
+        }
+      });
+    }
+    var gen = 0;
+    function rebuild() {
+      broken = false; name(); var g = ++gen;
+      anims.forEach(function (a) { a.reverse(); });
+      Promise.all(anims.map(function (a) { return a.finished; })).then(function () { if (g === gen && !broken) cleanup(); }, function () {});
+    }
+    sb.addEventListener("click", function () {
+      if (!layer) shatter();
+      else if (broken) rebuild();
+      else { gen++; broken = true; d.dataset.broken = ""; name(); anims.forEach(function (a) { a.reverse(); }); } /* pressed mid-rebuild: fall again from here */
+    });
+    addEventListener("resize", function () { if (layer) cleanup(); });
+
+    console.info("%cHi \u{1F44B} Thanks for looking under the hood. %ccontact@davidmojica.es",
+      'font: 14px "Roboto Mono", monospace; color: #cae7ff; background: #111827; padding: 4px 0 4px 8px',
+      'font: 14px "Roboto Mono", monospace; color: #f16476; background: #111827; padding: 4px 8px 4px 0');
+
+    /* desktop only: figures drift away from the cursor (<= 12px within 320px) */
+    if (!matchMedia("(pointer: fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var figs = [].slice.call(document.querySelectorAll(".field .fig")), x = 0, y = 0, queued = false;
+    /* edge figures: same push, projected onto the one axis that keeps them off the text */
+    var edges = [[".e-tri", 12], [".e-stairs", 10], [".e-plus", 15]].map(function (e) { return [document.querySelector(e[0]), e[1]]; });
+    function drift() {
+      queued = false;
+      if ("broken" in d.dataset) return; /* broken figures don't drift */
+      figs.forEach(function (f) {
+        var r = f.getBoundingClientRect(), dx = r.left + r.width / 2 - x, dy = r.top + r.height / 2 - y;
+        var dist = Math.sqrt(dx * dx + dy * dy) || 1, push = Math.max(0, 1 - dist / 320) * 12;
+        f.style.transform = push ? "translate3d(" + (dx / dist * push).toFixed(1) + "px," + (dy / dist * push).toFixed(1) + "px,0)" : "";
+      });
+      edges.forEach(function (e) {
+        var f = e[0], m = e[1], axis = getComputedStyle(f).getPropertyValue("--axis").trim();
+        var r = f.getBoundingClientRect(), dx = r.left + r.width / 2 - x, dy = r.top + r.height / 2 - y;
+        var dist = Math.sqrt(dx * dx + dy * dy) || 1, k = Math.max(0, 1 - dist / 320);
+        f.style.transform = !k ? "" : axis === "x" ? "translateX(" + (dx / dist * k * m).toFixed(1) + "px)"
+          : axis === "y" ? "translateY(" + (dy / dist * k * m).toFixed(1) + "px)"
+          : "rotate(" + ((dx > 0 ? 1 : -1) * k * m).toFixed(1) + "deg)";
+      });
+    }
+    addEventListener("pointermove", function (e) {
+      x = e.clientX; y = e.clientY;
+      if (!queued) { queued = true; requestAnimationFrame(drift); }
+    }, { passive: true });
+    document.documentElement.addEventListener("pointerleave", function () { x = y = -1e4; requestAnimationFrame(drift); });
+  })();
+</script>
+</body>
+</html>
